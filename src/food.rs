@@ -1,6 +1,4 @@
 use bevy::{color::Color, math::bounding::Aabb2d, prelude::*};
-
-use bevy_inspector_egui::prelude::*;
 use crate::events::FoodRequested;
 use crate::window::WindowSize;
 use rand::Rng;
@@ -8,7 +6,7 @@ use rand::Rng;
 const FOOD_COLOR: Color = Color::srgb(6.0, 1.2, 3.6);  // Neon pink (hex: #FF3399
 const FOOD_SCALE: f32 = 25.0;
 
-#[derive(Component, Debug, InspectorOptions, Reflect)]
+#[derive(Component, Debug, Reflect)]
 pub struct Food {
     pub color: Color,
     pub scale: f32,
@@ -22,7 +20,7 @@ impl Food {
         let x_rand: f32 = rand::thread_rng().gen_range(-x_range/2.0..=x_range/2.0);
         let y_rand: f32 = rand::thread_rng().gen_range(-y_range/2.0..=y_range/2.0);
         let scale = FOOD_SCALE;
-        println!("x_rand: {}, y_rand: {}", x_rand, y_rand);
+        
         Food { 
             x: x_rand,
             y: y_rand,

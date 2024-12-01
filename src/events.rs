@@ -4,14 +4,22 @@ use bevy::{
     math::bounding::{
         IntersectsVolume,
         Aabb2d,
-    }
+    },
 };
 
 use crate::game_assets::Score;
 use crate::food::Food;
 use crate::snake::{SnakeHead, SnakePart, SnakeSectionsRequested, Direction};
 use crate::game_assets::EndGame;
-use crate::window::{WindowSize, GameOverWindowBundle};
+use crate::window::{WindowSize, show_game_over_window};
+
+// #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Default, States)]
+// pub enum FoodRequest {
+//     #[default]
+//     Requested,
+//     NotRequested,
+// }
+
 
 #[derive(Resource, Debug)]
 pub struct FoodRequested {  
@@ -48,6 +56,7 @@ pub fn food_ate(
 pub fn check_game_over(
     mut commands: Commands,
     mut end_game: ResMut<EndGame>,
+    asset_server: Res<AssetServer>,
     score: Res<Score>,
     window: Res<WindowSize>,
     mut head_query: Query<(&Transform, &mut Direction, &mut SnakePart), With<SnakeHead>>,
@@ -68,7 +77,42 @@ pub fn check_game_over(
     if border_intersects(&head_transform.translation, head.scale, &window) {
         end_game.is_game_over = true;
         *direction = Direction::Pause;
-        commands.spawn(GameOverWindowBundle::init(score.value));
+        show_game_over_window(commands, asset_server, score.value);
     }
 
+}
+
+
+pub fn restart_button_system(
+    mut interaction_query: Query<(
+        &Interaction, 
+        &mut BackgroundColor, 
+    ), (
+        Changed<Interaction>, 
+        With<Button>
+    )>,
+    mut snake_parts_query: Query<&mut SnakePart>,
+    mut food_query: Query<&mut Food>,
+) {
+    
+    for (interaction, mut background_color) in &mut interaction_query {
+        match interaction {
+            Interaction::Pressed => {
+                println!("Pressed {:?}", snake_parts_query);
+                println!("Pressed {:?}", food_query);
+                // for mut snake_part in &mut snake_parts_query {
+                //     snake_part
+                // }
+                // background_color.0 = Color::WHITE.into();
+                
+                // border_color.0 = Color::WHITE.into();
+            }
+            Interaction::Hovered => {
+                *background_color = BackgroundColor(background_color.0.lighter(0.5));
+                // border_color.0 = Color::WHITE.into();
+            }
+            _ => {}
+        }
+    }
+    
 }

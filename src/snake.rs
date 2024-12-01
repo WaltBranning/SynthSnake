@@ -83,7 +83,6 @@ pub fn spawn_snake_section(
         let mut penultimate_location: Transform = Transform::default();
 
         for (transform, snake_part) in &position {
-            println!("snake_part speed = {:?}", snake_part.speed);
             if last_section_index < snake_part.section_index {
                 last_section_index = snake_part.section_index;
                 penultimate_location = last_location;
@@ -102,10 +101,6 @@ pub fn spawn_snake_section(
             section_index: last_section_index + 1,
             ..default()
         };
-        // println!("last_section_index = {:?} penultimate_section_index = {:?}", last_section_index, penultimate_section_index);
-
-        println!("last_location = {:?}", last_location);
-        println!("penultimate_location = {:?}", penultimate_location);
 
         commands
             .spawn((SpriteBundle {
