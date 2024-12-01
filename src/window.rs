@@ -8,7 +8,7 @@ use bevy::{
     window::{Window, WindowResolution},
 };
 
-const WINDOW_WIDTH: f32 = 1200.0;
+const WINDOW_WIDTH: f32 = 1000.0;
 const WINDOW_HEIGHT: f32 = 1000.0;
 
 // const RESTART_BUTTON_WIDTH: f32 = 50.0;
@@ -61,7 +61,7 @@ pub fn setup_window() -> Window {
     let window_size = WindowSize::default();
 
     Window {
-        title: "Snake".to_string(),
+        title: "SynthSnake".to_string(),
         resolution: WindowResolution::new(window_size.width, window_size.height),
         ..default()
     }
@@ -99,7 +99,7 @@ pub fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
             left: Val::Px(5.0),
             margin: UiRect {
                 left: Val::Percent(5.0),
-                bottom: Val::Percent(5.0),
+                bottom: Val::Percent(2.5),
                 ..default()
             },
             ..default()
@@ -113,6 +113,9 @@ pub fn display_score(score: ResMut<Score>, mut text_query: Query<&mut Text>) {
     }
 }
 
+#[derive(Component)]
+pub struct GameOverWindow;
+
 pub fn show_game_over_window(mut commands: Commands, asset_server: Res<AssetServer>, score: i32) {
     let score_text = format!("Game Over!\nYour Score: {}", score);
     let width_val = Val::Percent(65.0);
@@ -120,6 +123,7 @@ pub fn show_game_over_window(mut commands: Commands, asset_server: Res<AssetServ
 
     commands
         .spawn((
+            GameOverWindow,
             Node {
                 width: width_val,
                 height: height_val,
@@ -186,8 +190,6 @@ pub fn show_game_over_window(mut commands: Commands, asset_server: Res<AssetServ
                             Button,
                             Node {
                                 margin: UiRect::all(Val::Auto),
-                                // width: Val::Percent(RESTART_BUTTON_WIDTH),
-                                // height: Val::Percent(RESTART_BUTTON_HEIGHT),
                                 padding: UiRect::all(Val::Px(25.0)),
                                 justify_content: JustifyContent::Center,
                                 align_content: AlignContent::Center,

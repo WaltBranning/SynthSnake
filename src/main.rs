@@ -11,7 +11,7 @@ use events::{check_game_over, FoodRequested};
 
 use snake::{Direction, SnakeHead, SnakePlugin, SnakeSectionsRequested};
 
-use game_assets::{EndGame, Score};
+use game_assets::{EndGame, Score, Callback, Triggered, GridlinePlugin};
 
 use food::FoodPlugin;
 
@@ -65,17 +65,26 @@ fn main() {
                 display_score,
                 check_game_over,
                 restart_button_system,
+                evaluate_callbacks,
             )
                 .chain(),
         )
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(setup_window()),
-
             ..default()
         }))
-        .add_plugins((SnakePlugin, FoodPlugin))
+        .add_plugins((SnakePlugin, FoodPlugin, GridlinePlugin))
         .init_resource::<Score>()
         .init_resource::<EndGame>()
         .init_resource::<WindowSize>()
         .run();
+}
+
+
+fn evaluate_callbacks(query: Query<(Entity, &Callback), With<Triggered>>, mut commands: Commands) {
+    for (entity, callback) in query.iter() {
+        commands.run_system(callback.0);
+        println!("Evaluating callback {:?}", callback.0);
+        commands.entity(entity).remove::<Triggered>();
+    }
 }
