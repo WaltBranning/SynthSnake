@@ -1,5 +1,5 @@
 /target
 .cursorrules
 Cargo.lock
-.k8s
+/k8s
 nginx.conf
