@@ -13,7 +13,7 @@ A neon-soaked take on the classic Snake game, built with [Rust](https://www.rust
 ## 🚀 Play Now
 
 - 🌐 [Play in Browser](https://synthsnake.oddlygeek.com/)
-- 🐳 Docker: `docker pull waltbranning/synthsnake-20xx
+- 🐳 Docker: `docker pull waltbranning/synthsnake-20xx`
 - 🎲 Download for RetroPI/Arcade *Future Release*
 
 ## 🛠️ Technology Stack
