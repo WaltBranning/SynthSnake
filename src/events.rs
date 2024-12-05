@@ -1,11 +1,10 @@
 use bevy::{
-    math::bounding::{Aabb2d, IntersectsVolume},
-    prelude::*,
+    audio::PlaybackMode, math::bounding::{Aabb2d, IntersectsVolume}, prelude::*
 };
 use rand::Rng;
 
 use crate::food::{Food, FoodRequest};
-use crate::game_assets::{EndGame, Triggered};
+use crate::game_assets::{EndGame, GameAudio, Triggered};
 use crate::game_assets::Score;
 use crate::snake::{Direction, SnakeHead, SnakePart, SnakeSectionsRequested, SnakeRequest};
 use crate::window::{show_game_over_window, GameOverWindow, WindowSize};
@@ -22,10 +21,12 @@ impl Default for FoodRequested {
 }
 
 pub fn food_ate(
+    mut commands: Commands,
     mut score: ResMut<Score>,
     mut section_requested: ResMut<SnakeSectionsRequested>,
     mut food_query: Query<(&mut Transform, &mut Food), Without<SnakeHead>>,
     mut head_query: Query<(&Transform, &mut SnakePart), With<SnakeHead>>,
+    game_audio: Res<GameAudio>,
 ) {
     if let Ok((mut food_transform, mut food)) = food_query.get_single_mut() {
         if let Ok((_head_transform, mut head)) = head_query.get_single_mut() {
@@ -38,6 +39,14 @@ pub fn food_ate(
                 food_transform.translation = Vec3::new(x_rand, y_rand, 0.0);
                 score.increment();
                 section_requested.requested += 1;
+
+                commands.spawn((
+                    AudioPlayer::new(game_audio.food_eaten.clone()),
+                    PlaybackSettings {
+                        mode: PlaybackMode::Once,
+                        ..default()
+                    }
+                ));
             }
         };
     }

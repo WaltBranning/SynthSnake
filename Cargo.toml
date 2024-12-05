@@ -5,7 +5,7 @@ edition = "2021"
 authors = ["Walter Branning <walter.d.branning@icloud.com>"]
 
 [dependencies]
-bevy = { version = "0.15.0", features = ["dynamic_linking"] }
+bevy = { version = "0.15.0", features = ["dynamic_linking", "mp3", "wav"] }
 # bevy-inspector-egui = "0.27.0"
 
 # bevy-inspector-egui-rapier = { version = "*", features = ["rapier2d"] }
@@ -26,3 +26,8 @@ channel = "nightly"
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
 rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+[profile.release]
+opt-level = 'z'
+lto = true
+codegen-units = 1

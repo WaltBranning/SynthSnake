@@ -8,8 +8,8 @@ use bevy::{
     window::{Window, WindowResolution},
 };
 
-const WINDOW_WIDTH: f32 = 1000.0;
-const WINDOW_HEIGHT: f32 = 1000.0;
+pub const WINDOW_WIDTH: f32 = 1000.0;
+pub const WINDOW_HEIGHT: f32 = 1000.0;
 
 // const RESTART_BUTTON_WIDTH: f32 = 50.0;
 // const RESTART_BUTTON_HEIGHT: f32 = 25.0;
@@ -63,6 +63,7 @@ pub fn setup_window() -> Window {
     Window {
         title: "SynthSnake".to_string(),
         resolution: WindowResolution::new(window_size.width, window_size.height),
+        canvas: Some("#synth-snake-canvas".to_string()),
         ..default()
     }
 }

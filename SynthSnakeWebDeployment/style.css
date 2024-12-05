@@ -1,0 +1,217 @@
+/*
+                      /^\/^\
+                     _|__|  O|
+            \/     /~     \_/ \
+             \____|__________/  \
+                    \_______      \
+                            `\     \                 \
+                              |     |                  \
+                             /      /                    \
+                            /     /                       \\
+                          /      /                         \ \
+                         /     /                            \  \
+                       /     /             _----_            \   \
+                      /     /           _-~      ~-_         |   |
+                     (      (        _-~    _--_    ~-_     _/   |
+                      \      ~-____-~    _-~    ~-_    ~-_-~    /
+                        ~-_           _-~          ~-_       _-~
+                           ~--______-~                ~-___-~
+                     S Y N T H   S N A K E   2 0 X X
+*/
+
+:root {
+    --brand-text-color: #ecda37;
+    --brand-text-color-darker: #dac400;
+    --brand-text-color-header: #b4a429;
+    --brand-text-shadow-color:#ecda37b3;
+    --brand-text-glow-color: #ecda37b3;
+    --brand-text-glow-color-darker: #ecda37e6;
+
+    --brand-background-color: #350072;
+    --brand-border-color: #260052;
+    --brand-box-shadow-color: #4a0099;
+    --brand-glow-color: #4a009980;
+    --brand-glow-color-darker: #4a0099cc;
+}
+
+@font-face {
+    font-family: 'CyberAlert';
+    src: url('assets/fonts/CyberAlertItalic-pgo9y.otf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('assets/images/cyberpunk-futuristic-cityscape-at-dusk.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+#synth-snake-container {
+    position: relative;
+    padding: 25px;
+    background: linear-gradient(45deg, 
+        rgb(47, 0, 109) 0%, 
+        rgb(47, 0, 109) 35%, 
+        rgba(0, 0, 0, 1) 40%, 
+        rgba(0, 0, 0, 1) 60%, 
+        rgb(47, 0, 109) 65%, 
+        rgb(47, 0, 109) 100%);
+    z-index: 0;
+    border-radius: 10px;
+    animation: containerGlow 4s infinite alternate;
+    border-radius: 25px 0 25px 0;
+}
+
+.canvas-overlay-visibility {
+    visibility: visible;
+}
+
+
+#game-title-header {
+    visibility: hidden;
+    margin-bottom: 0.2em;
+    z-index: 3;
+    position: absolute;
+    top: 1%;
+    width: 1000px;
+    /* animation: textGlow 2s infinite alternate; */
+}
+
+#game-title-text-box {
+    margin: 0 auto;
+    animation: textGlow 2s infinite alternate;
+    text-align: center;
+    text-shadow: 0 0 10px var(--brand-text-shadow);
+    font-family: 'CyberAlert', sans-serif;
+    font-size: 3em;
+    color: var(--brand-text-color-darker);
+    /* width: 50%; */
+    /* background-color: var(--brand-background-color);
+    border-width: 0 15px 15px 15px;
+    border-color: var(--brand-border-color);
+    border-style: solid;
+    box-shadow: 0 0 20px var(--brand-box-shadow-color), 
+                0 0 30px var(--brand-box-shadow-color),
+                0 0 40px var(--brand-box-shadow-color); */
+}
+
+#canvas-overlay {
+    visibility: visible;
+    position: absolute;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    width: 1000px;
+    height: 1000px;
+    color: var(--brand-text-color);
+    text-shadow: 0 0 10px var(--brand-text-shadow);
+    z-index: 3;
+    /* background-image: url('assets/images/lens_flare.png'); */
+}
+
+#canvas-overlay h1 {
+    font-family: 'CyberAlert', sans-serif;
+    font-size: 4em;
+    margin-bottom: 0.2em;
+    animation: textGlow 2s infinite alternate;
+}
+
+#canvas-overlay h2 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: var(--brand-text-color-header);
+}
+
+#canvas-overlay p {
+    font-size: 1.2em;
+}
+
+#canvas-overlay-start-text {
+    font-family: 'CyberAlert', sans-serif;
+    font-size: 2.5em !important; 
+    animation: blink 2.5s infinite !important;
+}
+
+#canvas-overlay-footer {
+    color: var(--brand-text-color-header);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.15em;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 15px ;
+    position: absolute;
+    bottom: 50px;
+    width: 1000px;
+    animation: textGlow 2s infinite alternate;
+}
+
+#canvas-overlay-footer a {
+    color: var(--brand-text-color-darker);
+    text-decoration: underline;
+}
+
+#canvas-overlay-date {
+    font-size: 1em;
+}
+
+
+canvas {
+    z-index: 2;
+    outline: none;
+    background-color: #000;
+    width: 1000px;
+    height: 1000px;
+    border: 15px solid var(--brand-border-color);
+    box-shadow: 0 0 20px var(--brand-box-shadow-color), 
+                0 0 30px var(--brand-box-shadow-color),
+                0 0 40px var(--brand-box-shadow-color);
+    border-radius: 5px;
+}
+
+
+
+@keyframes containerGlow {
+    from {
+        box-shadow: 0 0 20px var(--brand-glow-color);
+    }
+    to {
+        box-shadow: 0 0 40px var(--brand-glow-color-darker);
+    }
+}
+
+@keyframes textGlow {
+    from {
+        text-shadow: 0 0 10px var(--brand-text-glow-color);
+    }
+    to {
+        text-shadow: 0 0 20px var(--brand-text-glow-color-darker);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@media (max-width: 1100px) {
+    canvas {
+        width: 800px;
+        height: 800px;
+    }
+}
+
+@media (max-width: 900px) {
+    canvas {
+        width: 600px;
+        height: 600px;
+    }
+}

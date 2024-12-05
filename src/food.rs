@@ -1,6 +1,6 @@
 use bevy::{color::Color, math::bounding::Aabb2d, prelude::*};
 use crate::events::FoodRequested;
-use crate::window::WindowSize;
+use crate::window::{WindowSize, WINDOW_WIDTH, WINDOW_HEIGHT};
 use rand::Rng;
 use crate::game_assets::Callback;
 
@@ -17,9 +17,11 @@ pub struct Food {
 }
 
 impl Food {
-    pub fn new(x_range: f32, y_range: f32) -> Self {
-        let x_rand: f32 = rand::thread_rng().gen_range(-x_range/2.0 - 100.0..=x_range/2.0 + 100.0);
-        let y_rand: f32 = rand::thread_rng().gen_range(-y_range/2.0 - 100.0..=y_range/2.0 + 100.0);
+    pub fn new(_x_range: f32, _y_range: f32) -> Self {
+        let x_range = (-WINDOW_WIDTH/2.0 + 100.0)..=(WINDOW_WIDTH/2.0 - 100.0);
+        let y_range = (-WINDOW_HEIGHT/2.0 + 100.0)..=(WINDOW_HEIGHT/2.0 - 100.0);
+        let x_rand: f32 = rand::thread_rng().gen_range(x_range);
+        let y_rand: f32 = rand::thread_rng().gen_range(y_range);
         let scale = FOOD_SCALE;
         
         Food { 
@@ -34,8 +36,10 @@ impl Food {
 
 impl Default for Food {
     fn default() -> Self {
-        let x_rand: f32 = rand::thread_rng().gen_range(-400.0..=400.0);
-        let y_rand: f32 = rand::thread_rng().gen_range(-300.0..=300.0);
+        let x_range = (-WINDOW_WIDTH/2.0 + 100.0)..=(WINDOW_WIDTH/2.0 - 100.0);
+        let y_range = (-WINDOW_HEIGHT/2.0 + 100.0)..=(WINDOW_HEIGHT/2.0 - 100.0);
+        let x_rand: f32 = rand::thread_rng().gen_range(x_range);
+        let y_rand: f32 = rand::thread_rng().gen_range(y_range);
         let scale = FOOD_SCALE;
         Food { 
             color: FOOD_COLOR, 

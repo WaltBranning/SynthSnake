@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynthSnake 20XX</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="synth-snake-container">
+        <div id="game-title-header"><div id="game-title-text-box">SynthSnake 20XX</div></div>
+        <div id="canvas-overlay">
+            <div id="canvas-overlay-description" class="canvas-overlay-visibility">
+                <h1>SynthSnake 20XX</h1>
+                <h2>A game of sound and vision</h2>
+                <h2>...........................................................................................</h2>
+                <h3>Controls and Goals</h3>
+                <p>Use the arrow keys to move the snake</p>
+                <p>Eat the food to grow longer and score points</p>
+                <p>The longer you are the faster you go</p>
+                <p>Avoid the walls your speed increases</p>
+                <p>Survive as long as you can</p>
+                <h2>...........................................................................................</h2>
+                <h2 id="canvas-overlay-start-text">Press any key to start</h2>
+            </div>
+        </div>
+        <canvas id="synth-snake-canvas"></canvas>
+        <div id="canvas-overlay-footer">
+            <span>Written in <a href="https://www.rust-lang.org/">Rust</a></span>
+            <span>Using <a href="https://bevyengine.org/">Bevy Engine</a></span>
+            <span>By <a href="https://www.linkedin.com/in/walter-branning/">Walter Branning</a></span>
+            <span>Github Repo: <a href="https://github.com/WaltBranning/SynthSnake">SynthSnake</a></span>
+            <span id="canvas-overlay-date">A.D. 2024</span>
+        </div>
+    </div>
+    <script type="module">
+        import init from './SynthSnake.js';
+        const audioCtx = new AudioContext();
+
+
+
+        // Start the audio context when a key is pressed
+        document.addEventListener('keydown', (event) => {
+            if (event.key) {
+                audioCtx.resume();
+                init().then(()=>console.log('init complete'));
+                const canvasOverlayVisibility = Array.from(document.getElementsByClassName('canvas-overlay-visibility'));
+                canvasOverlayVisibility.forEach(element => {element.remove();});
+                const canvasOverlay = document.getElementById('canvas-overlay');
+                canvasOverlay.style.height = '0';
+                const gameTitleHeader = document.getElementById('game-title-header');
+                gameTitleHeader.style.visibility = 'visible';
+            }
+        });
+    </script>
+</body>
+</html>

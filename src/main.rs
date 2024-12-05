@@ -11,7 +11,7 @@ use events::{check_game_over, FoodRequested};
 
 use snake::{Direction, SnakeHead, SnakePlugin, SnakeSectionsRequested};
 
-use game_assets::{EndGame, Score, Callback, Triggered, GridlinePlugin};
+use game_assets::{EndGame, Score, Callback, Triggered, GridlinePlugin, setup_audio};
 
 use food::FoodPlugin;
 
@@ -56,7 +56,7 @@ fn read_input(
 
 fn main() {
     App::new()
-        .add_systems(Startup, (setup_camera, setup_ui).chain())
+        .add_systems(Startup, (setup_camera, setup_ui, setup_audio).chain())
         .add_systems(
             Update,
             (
@@ -84,7 +84,6 @@ fn main() {
 fn evaluate_callbacks(query: Query<(Entity, &Callback), With<Triggered>>, mut commands: Commands) {
     for (entity, callback) in query.iter() {
         commands.run_system(callback.0);
-        println!("Evaluating callback {:?}", callback.0);
         commands.entity(entity).remove::<Triggered>();
     }
 }
