@@ -29,6 +29,7 @@
         <div id="canvas-overlay">
             <div id="canvas-overlay-description" class="canvas-overlay-visibility">
                 <h1>SynthSnake 20XX</h1>
+                <div id="description-delete">
                 <h2>A game of sound and vision</h2>
                 <h2>...........................................................................................</h2>
                 <h3>Controls and Goals</h3>
@@ -38,6 +39,7 @@
                 <p>Avoid the walls your speed increases</p>
                 <p>Survive as long as you can</p>
                 <h2>...........................................................................................</h2>
+                </div>
                 <h2 id="canvas-overlay-start-text">Press any key to start</h2>
             </div>
         </div>
@@ -51,24 +53,34 @@
         </div>
     </div>
     <script type="module">
+
         import init from './SynthSnake.js';
-        const audioCtx = new AudioContext();
 
+        async function initSynthSnake() {
+            const audioCtx = new AudioContext();
 
+            // Start the audio context when a key is pressed
+            document.addEventListener('keydown', async (event) => {
+                if (event.key) {
+                    audioCtx.resume();
+                    
+                    const startButton = document.getElementById('canvas-overlay-start-text');
+                    document.getElementById('description-delete').innerHTML = '';
+                    startButton.innerHTML = 'Loading...';
 
-        // Start the audio context when a key is pressed
-        document.addEventListener('keydown', (event) => {
-            if (event.key) {
-                audioCtx.resume();
-                init();
-                const canvasOverlayVisibility = Array.from(document.getElementsByClassName('canvas-overlay-visibility'));
-                canvasOverlayVisibility.forEach(element => { element.remove(); });
-                const canvasOverlay = document.getElementById('canvas-overlay');
-                canvasOverlay.style.height = '0';
-                const gameTitleHeader = document.getElementById('game-title-header');
-                gameTitleHeader.style.visibility = 'visible';
-            }
-        });
+                    await init().then(() => {
+                        const canvasOverlayVisibility = Array.from(document.getElementsByClassName('canvas-overlay-visibility'));
+                        canvasOverlayVisibility.forEach(element => { element.remove(); });
+                        const canvasOverlay = document.getElementById('canvas-overlay');
+                        canvasOverlay.style.height = '0';
+                        const gameTitleHeader = document.getElementById('game-title-header');
+                        gameTitleHeader.style.visibility = 'visible';
+                    });
+                }
+            });
+        }
+
+        initSynthSnake();
     </script>
 </body>
 

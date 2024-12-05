@@ -5,7 +5,7 @@ metadata:
   labels:
     app: synthsnake-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: synthsnake-app
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: synthsnake-app
-          image: waltbranning/synthsnake-20xx:v0.2.1
+          image: waltbranning/synthsnake-20xx:v0.2.2
           ports:
             - containerPort: 80
               name: synthsnake-svc
