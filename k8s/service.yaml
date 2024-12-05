@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: synthsnake-svc
+  labels:
+    app: synthsnake-app
+spec:
+  type: ClusterIP
+  selector:
+    app: synthsnake-app
+  ports:
+    - port: 80
+      targetPort: synthsnake-svc
