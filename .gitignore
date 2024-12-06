@@ -2,5 +2,4 @@
 .cursorrules
 Cargo.lock
 /k8s
-/k8scopy
 nginx.conf
