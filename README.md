@@ -8,7 +8,7 @@ A neon-soaked take on the classic Snake game, built with [Rust](https://www.rust
 - Cross-platform compatibility (Web Assembly & Native) *Future Release*
 - Retro-futuristic visual design with neon aesthetics
 - Original synthwave soundtrack (Generated with [Suno](suno.com))
-- Arcade cabinet ready for RetroPI setups *Future Release*
+- Arcade cabinet ready for RetroPI setups or Batocera *Future Release*
 
 ## 🚀 Play Now
 
